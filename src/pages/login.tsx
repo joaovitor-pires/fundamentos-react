@@ -1,37 +1,48 @@
 import { Button, Link as ChakraLink, Field, Flex, Heading, HStack, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import NextLink from "next/link";
-import loginImage from "../../public/assets/login-image.gif";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PasswordInput } from "@/components/ui/password-input";
-import z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { toaster } from "@/components/ui/toaster";
 import { useSession } from "@/contexts/SessionContext";
-import { useEffect } from "react";
+import loginImage from "../../public/assets/login-image.gif";
 
 const signInFormSchema = z.object({
-  email: z.email("Digite um e-mail válido").nonempty("O e-mail é obrigatório"),
-  password: z.string().nonempty("A senha é obrigatória").min(8, "Senha deve ter pelo menos 8 caracteres"),
-})
+  email: z.email("Digite um e-mail válido").nonempty("O e-mail é obrigatorio"),
+  password: z.string().nonempty("A senha é obrigatoria").min(8, "A senha deve ter pelo menos 8 caracteres"),
+});
 
 type SignInFormData = z.infer<typeof signInFormSchema>;
 
 export default function Login() {
-  const { user, updateUser} = useSession();
+  const { user, signIn } = useSession();
 
-  const { register, handleSubmit, formState: {errors} } = useForm({
-    resolver: zodResolver(signInFormSchema),
+  const router = useRouter();
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(signInFormSchema)
   });
 
-  function handleSignIn(data: SignInFormData) {
-    console.log(data);
-    updateUser({
-      id: "teste",
-      email: data.email,
-      cpf: "9839483948",
-      fullName: "Joao Vitor",
-      avatarUrl: "https://avatars.githubusercontent.com/u/176967234?v=4"
-    })
+  async function handleSignIn({ email, password }: SignInFormData) {
+    const promise = new Promise<void>(async (resolve, reject) => {
+      try {
+        await signIn({ email, password });
+        resolve();
+        router.push('/');
+      } catch {
+        reject();
+      }
+    });
+
+    toaster.promise(promise, {
+      success: { title: 'Login realizado com sucesso.' },
+      error: { title: 'E-mail ou senha incorretos.' },
+      loading: { title: 'Carregando informações do usuário, aguarde...' }
+    });
   }
 
   useEffect(() => {
@@ -45,7 +56,7 @@ export default function Login() {
       </Flex>
       <VStack w="50%" justify="center">
         <Stack>
-          <Heading as="h1" color="black" fontSize="3xl" fontWeight="bold">Entrar</Heading>
+          <Heading as="h1" color="black" fontSize="3xl" fontWeight="bold">Login</Heading>
 
           <Text color="gray.400" fontSize="lg" fontWeight="normal">Se você já é membro, você pode fazer login com seu endereço de e-mail e senha.</Text>
 
@@ -54,7 +65,7 @@ export default function Login() {
               <Field.Label color="gray.500" fontSize="md">
                 Email
               </Field.Label>
-              <Input type="email" h={16} colorPalette="blue" borderRadius="md" color="black" { ... register("email")}/>
+              <Input type="email" h={16} colorPalette="blue" borderRadius="md" color="black" {...register("email")} />
               <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
             </Field.Root>
 
@@ -62,7 +73,7 @@ export default function Login() {
               <Field.Label color="gray.500" fontSize="md">
                 Senha
               </Field.Label>
-              <PasswordInput h={16} colorPalette="blue" borderRadius="md" color="black"{ ... register("password")}/>
+              <PasswordInput h={16} colorPalette="blue" borderRadius="md" color="black" {...register("password")} />
               <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
             </Field.Root>
 

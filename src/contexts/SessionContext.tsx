@@ -1,31 +1,29 @@
 import { destroyCookie, setCookie } from "nookies";
 import { createContext, ReactNode, useContext, useState } from "react";
+import { api } from "@/services/apiClient";
 
 const CESUL_USER = "cesul.user";
+const CESUL_TOKEN = "cesul.token";
+const CESUL_REFRESHTOKEN = "cesul.refreshToken";
 
 type Credentials = {
-  username: string;
+  email: string;
   password: string;
 }
 
 type User = {
-  id:        string;
-  cpf:       string;
-  email:     string;
-  fullName:  string;
-  avatarUrl: string;
+  email: string;
+  permissions: string[];
+  roles: string[];
 }
 
 type SessionContextData = {
   user: User;
   updateUser: (user: User) => Promise<void>;
+  signIn: ({ email, password }: Credentials) => Promise<void>;
 }
 
 const SessionContext = createContext({} as SessionContextData);
-
-export async function signIn({ username, password }: Credentials) {
-
-}
 
 export async function signOut() {
   destroyCookie(null, CESUL_USER, {
@@ -37,26 +35,39 @@ interface SessionProviderProps {
   children: ReactNode;
 }
 
-export function SessionProvider({children}: SessionProviderProps) {
+export function SessionProvider({ children }: SessionProviderProps) {
   const [user, setUser] = useState<User>({} as User);
 
   async function updateUser(user: User) {
-    createCookieUser(user);
+    createCookie(CESUL_USER, JSON.stringify(user));
   }
 
-  async function createCookieUser(user: User) {
-    setCookie(null, CESUL_USER, JSON.stringify(user), {
+  async function createCookie(name: string, value: string) {
+    setCookie(null, name, value, {
       path: "/",
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
     });
+  }
 
-    setUser(user);
+  async function signIn({ email, password }: Credentials) {
+    const response = await api.post('/sessions', {
+      email,
+      password
+    });
+
+    const { token, refreshToken, permissions, roles } = response.data;
+
+    createCookie(CESUL_USER, JSON.stringify({ email, permissions, roles }));
+    createCookie(CESUL_TOKEN, token);
+    createCookie(CESUL_REFRESHTOKEN, refreshToken);
+
+    setUser({ email, permissions, roles });
   }
 
   return (
-    <SessionContext.Provider value={{ user, updateUser }}>
+    <SessionContext.Provider value={{ user, updateUser, signIn }}>
       {children}
     </SessionContext.Provider>
   );
