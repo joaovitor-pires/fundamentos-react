@@ -5,8 +5,8 @@ import { TbHelpHexagonFilled, TbSettingsFilled } from "react-icons/tb";
 import { TiThMenu } from "react-icons/ti";
 import { Avatar } from "@/components/ui/avatar";
 import { useColorMode } from "@/components/ui/color-mode";
-import logoPreto from "../public/assets/logo-cesul-black.png";
-import logoBranco from "../public/assets/logo-cesul-white.png";
+import logoPreto from "../../../public/assets/logo-cesul-black.png";
+import logoBranco from "../../../public/assets/logo-cesul-white.png";
 
 export function DefaultHeader() {
   const { toggleColorMode, colorMode } = useColorMode();
