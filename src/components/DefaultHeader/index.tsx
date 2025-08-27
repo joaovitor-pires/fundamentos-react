@@ -1,21 +1,26 @@
 import { Flex, Group, Separator } from "@chakra-ui/react";
-import { Logo } from "./Logo";
-import { Notificatons } from "./Notifications";
-import { Help } from "./Help";
-import { Settings } from "./Settings";
 import { ColorMode } from "./ColorMode";
-import { Profile } from "./Profile";
+import { Help } from "./Help";
+import { Logo } from "./Logo";
 import { Menu } from "./Menu";
+import { Notificatons } from "./Notifications";
+import { Profile } from "./Profile";
+import { Settings } from "./Settings";
 
 export function DefaultHeader() {
-
   return (
     <Flex flexDir="column">
-      <Flex w="full" justify="space-between" borderBottomWidth={1} py={2} px={4} >
+      <Flex
+        w="full"
+        justify="space-between"
+        borderBottomWidth={1}
+        py={2}
+        px={4}
+      >
         <Flex align="center" gap={4}>
           <Menu />
 
-          <Logo/>
+          <Logo />
         </Flex>
 
         <Group>
@@ -32,6 +37,6 @@ export function DefaultHeader() {
           <Profile />
         </Group>
       </Flex>
-     </Flex>
+    </Flex>
   );
 }
