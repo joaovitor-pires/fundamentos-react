@@ -1,50 +1,35 @@
-import { Flex, Group, IconButton, Image, Separator } from "@chakra-ui/react";
-import { IoMdMoon, IoMdSunny } from "react-icons/io";
-import { IoNotificationsSharp } from "react-icons/io5";
-import { TbHelpHexagonFilled, TbSettingsFilled } from "react-icons/tb";
-import { TiThMenu } from "react-icons/ti";
-import { Avatar } from "@/components/ui/avatar";
-import { useColorMode } from "@/components/ui/color-mode";
+import { Flex, Group, Separator } from "@chakra-ui/react";
 import { Logo } from "./Logo";
+import { Notificatons } from "./Notifications";
+import { Help } from "./Help";
+import { Settings } from "./Settings";
+import { ColorMode } from "./ColorMode";
+import { Profile } from "./Profile";
+import { Menu } from "./Menu";
 
 export function DefaultHeader() {
-  const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <Flex flexDir="column">
       <Flex w="full" justify="space-between" borderBottomWidth={1} py={2} px={4} >
         <Flex align="center" gap={4}>
-          <IconButton variant="ghost" rounded="full" >
-            <TiThMenu />
-          </IconButton>
-          
+          <Menu />
+
           <Logo/>
         </Flex>
 
         <Group>
-          <IconButton variant="ghost" rounded="full">
-            <IoNotificationsSharp />
-          </IconButton>
+          <Notificatons />
 
-          <IconButton variant="ghost" rounded="full">
-            <TbHelpHexagonFilled />
-          </IconButton>
+          <Help />
 
-          <IconButton variant="ghost" rounded="full">
-            <TbSettingsFilled />
-          </IconButton>
+          <Settings />
 
-          <IconButton variant="ghost" rounded="full" onClick={toggleColorMode}>
-            {colorMode === "dark" ? <IoMdMoon /> : <IoMdSunny />}
-          </IconButton>
+          <ColorMode />
 
           <Separator h={6} orientation="vertical" mx={2} />
 
-          <Avatar
-            name="João Vitor"
-            colorPalette="purple"
-            src="https://avatars.githubusercontent.com/u/128654876?v=4"
-          />
+          <Profile />
         </Group>
       </Flex>
      </Flex>
