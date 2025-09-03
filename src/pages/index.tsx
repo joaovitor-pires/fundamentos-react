@@ -1,10 +1,12 @@
-import { Heading } from "@chakra-ui/react";
 import { DefaultLayout } from "@/layouts/DefaultLayout";
 
 export default function Home() {
   return (
-    <DefaultLayout>
-      <Heading color="red"> DASHBOARD DO JOAO </Heading>
+    <DefaultLayout
+      title="Dashboard Acadêmico"
+      description="Visão geral do sistema universitário"
+    >
+      Oi
     </DefaultLayout>
   );
 }

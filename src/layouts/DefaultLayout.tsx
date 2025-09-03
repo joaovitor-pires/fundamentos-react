@@ -1,18 +1,26 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { DefaultHeader } from "@/components/DefaultHeader";
 
 type DefaultLayoutProps = {
   children: ReactNode;
+  title: string;
+  description: string;
 };
 
-export function DefaultLayout({ children }: DefaultLayoutProps) {
+export function DefaultLayout({ children, title, description }: DefaultLayoutProps) {
 
   return (
     <Flex flexDir="column" >
       <DefaultHeader />
 
-      {children}
+      <Flex>
+        <Heading fontSize="3xl" mb="4">{title}</Heading>
+
+        <Text color="fg.muted" fontSize="md">{description}</Text>
+
+        {children}
+      </Flex>
     </Flex>
   );
 }
