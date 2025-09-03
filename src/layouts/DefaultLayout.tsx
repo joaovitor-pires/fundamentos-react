@@ -9,15 +9,14 @@ type DefaultLayoutProps = {
 };
 
 export function DefaultLayout({ children, title, description }: DefaultLayoutProps) {
-
   return (
-    <Flex flexDir="column" >
+    <Flex flexDir="column" p={8} >
       <DefaultHeader />
 
-      <Flex>
+      <Flex flexDir="column">
         <Heading fontSize="3xl" mb="4">{title}</Heading>
 
-        <Text color="fg.muted" fontSize="md">{description}</Text>
+        <Text color="fg.muted" fontSize="md" mb="4">{description}</Text>
 
         {children}
       </Flex>
