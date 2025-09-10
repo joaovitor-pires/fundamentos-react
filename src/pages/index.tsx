@@ -1,3 +1,4 @@
+import { IndicatorCard } from "@/components/IndicatorCard";
 import { DefaultLayout } from "@/layouts/DefaultLayout";
 import { Card, Flex, FormatNumber, HStack, Icon, Stat } from "@chakra-ui/react";
 import { FaGraduationCap } from "react-icons/fa";
@@ -11,78 +12,41 @@ export default function Home() {
       title="Dashboard Acadêmico"
       description="Visão geral do sistema universitário"
     >
-      <HStack>
-        <Card.Root>
-          <Card.Body flexDir="row" alignItems="center" gap={6}>
-            <Stat.Root>
-              <Stat.Label fontSize="md">Total de Estudantes</Stat.Label>
-              <Stat.ValueText>
-                <FormatNumber value={2847} />
-              </Stat.ValueText>
-              <Stat.UpIndicator alignSelf="start">+12% este mês</Stat.UpIndicator>
-            </Stat.Root>
+      <HStack gap={8}>
+        <IndicatorCard
+          label="Total de Estudantes"
+          value={2.847}
+          indicator="+12% este mês"
+          icon={IoPeopleSharp}
+          colorPallete="blue"
+        />
 
-            <Flex justify="center" align="center" backgroundColor="blue.100" rounded="lg" p={4}>
-              <Icon size="xl" color="blue.700">
-                <IoPeopleSharp />
-              </Icon>
-            </Flex>
-          </Card.Body>
-        </Card.Root>
+        <IndicatorCard
+          label="Professores Ativos"
+          value={198}
+          indicator="+3% este mês"
+          icon={FaGraduationCap}
+          colorPallete="green"
+        />
 
-        <Card.Root>
-          <Card.Body flexDir="row" alignItems="center" gap={6}>
-            <Stat.Root>
-              <Stat.Label fontSize="md">Professores Ativos</Stat.Label>
-              <Stat.ValueText>
-                <FormatNumber value={197} />
-              </Stat.ValueText>
-              <Stat.UpIndicator alignSelf="start">+3% este mês</Stat.UpIndicator>
-            </Stat.Root>
+        <IndicatorCard
+          label="Cursos Oferecidos"
+          value={24}
+          indicator="+2% este mês"
+          icon={ImBooks}
+          colorPallete="purple"
+        />
 
-            <Flex justify="center" align="center" backgroundColor="green.100" rounded="lg" p={4}>
-              <Icon size="xl" color="green.700">
-                <FaGraduationCap />
-              </Icon>
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-
-        <Card.Root>
-          <Card.Body flexDir="row" alignItems="center" gap={6}>
-            <Stat.Root>
-              <Stat.Label fontSize="md">Cursos Oferecidos</Stat.Label>
-              <Stat.ValueText>
-                <FormatNumber value={2847} />
-              </Stat.ValueText>
-              <Stat.UpIndicator alignSelf="start">+2% este mês</Stat.UpIndicator>
-            </Stat.Root>
-
-            <Flex justify="center" align="center" backgroundColor="purple.100" rounded="lg" p={4}>
-              <Icon size="xl" color="purple.700">
-                <ImBooks />
-              </Icon>
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-
-        <Card.Root>
-          <Card.Body flexDir="row" alignItems="center" gap={6}>
-            <Stat.Root>
-              <Stat.Label fontSize="md">Taxa de Aprovação</Stat.Label>
-              <Stat.ValueText>
-                <FormatNumber value={2847} />
-              </Stat.ValueText>
-              <Stat.UpIndicator alignSelf="start">+2.1% este mês</Stat.UpIndicator>
-            </Stat.Root>
-
-            <Flex justify="center" align="center" backgroundColor="orange.100" rounded="lg" p={4}>
-              <Icon size="xl" color="orange.700">
-                <FaArrowTrendUp />
-              </Icon>
-            </Flex>
-          </Card.Body>
-        </Card.Root>
+        <IndicatorCard
+          label="Taxa de Aprovação"
+          value={0.892}
+          style="percent"
+          maximumFractionDigits={2}
+          minimumFractionDigits={2}
+          indicator="+2.1% este mês"
+          icon={FaArrowTrendUp}
+          colorPallete="orange"
+        />
       </HStack>
     </DefaultLayout>
   );
