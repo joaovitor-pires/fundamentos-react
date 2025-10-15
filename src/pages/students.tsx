@@ -81,7 +81,7 @@ export default function Students() {
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("enrollment", {
-      header: "Matéria",
+      header: "Matrícula",
       cell: (info) => info.getValue(),
     }),
   ];
