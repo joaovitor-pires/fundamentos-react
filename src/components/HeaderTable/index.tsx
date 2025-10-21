@@ -5,6 +5,7 @@ import { ExportButton } from "./ExportButton";
 import { FilterButton } from "./FilterButton";
 import { FilterSelect } from "./FilterSelect";
 import { SearchInput } from "./SearchInput";
+import { AddStudentDialog } from "../AddStudentDialog";
 
 export function HeaderTable() {
   const status = createListCollection({
@@ -39,9 +40,7 @@ export function HeaderTable() {
 
             <ExportButton onClick={() => console.log()} />
 
-            <AddButton>
-              Novo Estudante
-            </AddButton>
+            <AddStudentDialog />
           </HStack>
         </SimpleGrid>
       </Card.Body>
